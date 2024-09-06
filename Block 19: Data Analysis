@@ -1,1 +1,127 @@
+import re
+import sqlite3
+import pandas as pd
+import numpy as np
+
+
+#Search for the pattern 'is' in the string 's' and display the matched object in the string:“This is a sample string.”
+s = "This is a sample string."
+pattern = "is"
+found_ = re.search(pattern, s)
+print(found_)
+#<re.Match object; span=(2, 4), match='is'>
+
+
+#Find all occurrences of the word 'sentence' in the string 's' in the string: “This is a sentence. This is also a sentence. Is this a sentence too?”.
+s = 'This is a sentence. This is also a sentence. Is this a sentence too?'
+pattern = 'sentence'
+re.findall(pattern, s)
+#['sentence', 'sentence', 'sentence']
+
+
+#Find all types of websites of email addresses in the 'emails': martin@gmail.com thomas@stanford.edu rose_11@fashion.now.inc
+emails = 'martin@gmail.com thomas@stanford.edu rose_11@fashion.now.inc'
+Website_pattern = '\@\w+....\.\w+'
+websites = re.findall(Website_pattern, emails)
+name_pattern = '\w+(?:@)'
+names = re.findall(name_pattern, emails)
+names, websites
+#(['martin@', 'thomas@', 'rose_11@'], ['@gmail.com', '@stanford.edu', '@fashion.now.inc'])
+
+
+#Extract all phone numbers from the 'phone_numbers': 0821-1234567 0800-1234567 1234-1234567
+s = 'Emma changed her phone number from 0821-1234567 to 0800-1234567. Adam is still using 1234-1234567 as his number.'
+pattern = '\d+.\d+'
+phone_numbers = re.findall(pattern, s)
+phone_numbers
+#['0821-1234567', '0800-1234567', '1234-1234567']
+
+#Replace variations of 'Amrica' with 'America' in the “sample.txt” file.
+with open('Sample.txt', 'r') as file:
+    data = file.read().replace('\n', '')
+data
+#   Captain $Amrica is played by Chris_Evans.I love Chris Evans.Captain Amrica was     released in 2011  ~2  as a part of ^72 Marvel Franchise.WHILE THERE WERE MANY PARTS OF THE MOVIEW RELEASED   I LOVED THE FIRST ONE. -- !!!!'
+
+
+#Let's replace the incorrect words, which can be done using the dot sub method.
+sub_strings = ['\$Amrica', 'Amrica']
+for string in sub_strings:
+    data = re.sub(string, 'America', data)
+data
+#'   Captain America is played by Chris_Evans.I love Chris Evans.Captain America was     released in 2011  ~2  as a part of ^72 Marvel Franchise.WHILE THERE WERE MANY PARTS OF THE MOVIEW RELEASED   I LOVED THE FIRST ONE. -- !!!!'
+
+
+#Remove characters '~' and '^' followed by numbers from the “sample.txt” file.
+patterns = ['\~\d+', '\^\d+', ' +', '_']
+for pattern in patterns:
+    data = re.sub(pattern, ' ', data)
+data
+#' Captain America is played by Chris Evans.I love Chris Evans.Captain America was released in 2011 as a part of Marvel Franchise.WHILE THERE WERE MANY PARTS OF THE MOVIEW RELEASED I LOVED THE FIRST ONE. -- !!!!'
+
+
+#Find all consecutive uppercase words in the “sample.txt” file.
+upper_case =  re.findall('([A-Z]{1}([A-Z]{1})+)', data)
+upper_case
+#[('WHILE', 'E'),('THERE', 'E'), ('WERE', 'E'), ('MANY', 'Y'), ('PARTS', 'S'), ('OF', 'F'), ('THE', 'E'), ('MOVIEW', 'W'), ('RELEASED', 'D'), ('LOVED', 'D'), ('THE', 'E'), ('FIRST', 'T'),('ONE', 'E')]
+
+
+#Let's convert all of this into lowercase using list comprehension.
+for item in upper_case:
+    data = re.sub(item[0], item[0].lower(), data)   
+data
+#' Captain America is played by Chris Evans.I love Chris Evans.Captain America was released in 2011 as a part of Marvel Franchise.while there were many parts of the moview released I loved the first one. -- !!!!'
+
+
+
+
+#Let's first import our dataset, dump it into a database and then perform queries on it. We’ll be using sqlite3.
+df = pd.DataFrame()
+df = pd.read_csv(filepath_or_buffer='HousePrices.csv')
+df.head()
+
+
+#Before dumping it into the database, let's create a connection
+conn = sqlite3.connect('SQL_data.db')
+cursor = conn.cursor()
+cursor.execute('''
+                CREATE TABLE IF NOT EXISTS house_data (
+                    date TEXT,
+                    price INTEGER,
+                    bedrooms INTEGER,
+                    bathrooms INTEGER,
+                    sqft_living INTEGER,
+                    sqft_lot INTEGER,
+                    floors INTEGER,
+                    waterfront INTEGER,
+                    view INTEGER,
+                    condition INTEGER,
+                    sqft_above INTEGER,
+                    sqft_basement INTEGER,
+                    yr_built INTEGER,
+                    yr_renovated INTEGER,
+                    street   
+                 TEXT,
+                    city TEXT,
+                    statezip TEXT,
+                    country TEXT
+                );
+                ''')
+try:
+    columns = ', '.join(df.columns)
+    placeholders = ', '.join(['?'] * len(df.columns))
+    insert_query = f"INSERT INTO house_data ({columns}) VALUES ({placeholders})"
+    cursor.executemany(insert_query, df.to_numpy())
+    conn.commit()
+except sqlite3.OperationalError as e:
+    print(f"Error inserting data: {e}")
+
+
+#Let's read the data using pandas and the .read SQL method.
+df = pd.read_sql_query("SELECT * FROM house_data", conn)
+df
+
+
+#Let's start with a query using the **where** keyword.
+df = pd.read_sql_query("SELECT city, price FROM house_data WHERE city == 'Seattle'", conn)
+df
 

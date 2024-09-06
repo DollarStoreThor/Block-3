@@ -302,6 +302,7 @@ Tasks to be performed:
 ###    Block 20: Data Wrangling
 
 
+
 Overview: 
 
     This workshop is a comprehensive introduction to data analysis using the Pandas library in Python. The workshop will use the Titanic dataset, a rich dataset providing details about the passengers on the Titanic.
@@ -323,7 +324,7 @@ Directions:
     Data Preprocessing: Normalize data using the Min-Max scaling technique. 
     Groupby Operations: Use the df.groupby() function to group data by a particular column and perform aggregate functions on these groups. 
     Data Visualization: You can use df.plot() to plot other types of charts, such as bar charts.  
-
+![download](https://github.com/user-attachments/assets/bdf8362e-5705-425a-9b36-ad4cad191b04)
 
 ###    Block 21: Data Visualization
 

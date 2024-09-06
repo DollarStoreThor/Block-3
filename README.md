@@ -144,6 +144,7 @@ Directions:
     A histogram showing the distribution of house prices using .plot() 
     Scatter plots to visualize the relationships between price and other numeric features using .plot() 
     A bar graph to count the occurrences of each city 
+![download](https://github.com/user-attachments/assets/9444e654-355a-42ce-8d7d-c542420ae889)
 
 
 ###    Block 17: Statistics Fundamentals

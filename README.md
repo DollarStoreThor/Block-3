@@ -116,6 +116,45 @@ data = np.array([[1500,3,2,400,200000],
 
 Block 16: Working With Pandas
 
+
+Scenario:
+Suppose you are a data analyst working for a real estate company. Your manager has provided you with the "house_prices.csv" dataset and wants you to perform a preliminary analysis of the data to gain insights into the housing market. The company is interested in understanding the factors that influence house prices and wants to identify potential opportunities for growth in its business. 
+
+Problem Statement:
+
+Write a Python code that utilizes the Pandas library to load, clean, and analyze the dataset. Generate visualizations using Pandas to better understand the relationships between house prices and various features. Present your findings and highlight any interesting trends or correlations that you discover during your analysis. 
+
+Directions: 
+
+1. Import the necessary libraries and load the dataset into a Pandas DataFrame. 
+
+2. Perform basic data exploration and data cleaning if necessary. 
+
+             - display the first few rows
+
+             - display the shape of the dataframe
+
+             - display the size of the dataframe (aka the amount of cells or data points (row_count*column_count))
+
+             - display the number of NONE values in the dataset
+
+        
+
+3. Answer a few key questions: 
+
+Calculate the average house price using .mean(). 
+Find the most common number of bedrooms and bathrooms. 
+Identify any correlation between the house price and other numeric features (e.g., sqft_living, waterfront, and view) using .corr() functions. 
+Calculate the average price of waterfront and non-waterfront houses. 
+Determine the average price of houses with different numbers of floors. 
+Analyze the average price based on the house condition. 
+4. Visualize the data using only Pandas plotting capabilities to create: 
+
+A histogram showing the distribution of house prices using .plot() 
+Scatter plots to visualize the relationships between price and other numeric features using .plot() 
+A bar graph to count the occurrences of each city 
+
+
 Block 17: Statistics Fundamentals
 
 Block 18: Advanced Statistics

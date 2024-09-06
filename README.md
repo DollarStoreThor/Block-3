@@ -1,11 +1,11 @@
-## UNIT-3
+###    UNIT-3
 
 `Andrew Thomas`
 `Overview of Project for Unit 3`
 
-###        UNIT #3 : Applied Data Science with Python
+###    UNIT #3 : Applied Data Science with Python
 
-Block 14: NumPy
+###    Block 14: NumPy
 
 Overview:
 
@@ -66,7 +66,7 @@ Objective
     
     X = Matrix with independent variables (House area, Bedrooms, Bathrooms, and Garage size)
     
-     y = Target variable (Price in $)
+    y = Target variable (Price in $)
 
 Your task is to build the house price prediction model using linear algebra principles in Python.
 
@@ -83,19 +83,10 @@ Directions
     Calculate the estimate price with the dot product of the coefficients and the new features.
     Create a new_features matrix with the following values:
     House area = 1800 sq ft
-    
     Bedrooms = 3
-    
     Bathrooms = 2
-    
     Garage size = 400 sq ft
-    
     Call the function estimate_house_price() to predict the price of the new house.
-    
-    HINT: In order to split X from the y, use this code 
-    X = data[:, :-1]
-    
-    y = data[:, -1]
     
     data = np.array([[1500,3,2,400,200000],
                      [1800,4,3,500,250000],
@@ -135,14 +126,9 @@ Directions:
     2. Perform basic data exploration and data cleaning if necessary. 
     
                  - display the first few rows
-    
                  - display the shape of the dataframe
-    
                  - display the size of the dataframe (aka the amount of cells or data points (row_count*column_count))
-    
                  - display the number of NONE values in the dataset
-    
-            
     
     3. Answer a few key questions: 
     
@@ -152,6 +138,7 @@ Directions:
     Calculate the average price of waterfront and non-waterfront houses. 
     Determine the average price of houses with different numbers of floors. 
     Analyze the average price based on the house condition. 
+    
     4. Visualize the data using only Pandas plotting capabilities to create: 
     
     A histogram showing the distribution of house prices using .plot() 
@@ -216,13 +203,9 @@ Scenario:
 Dataset:
 
     The dataset is provided with information about each neighborhood in San Francisco. The dataset includes the following fields: 
-    
     - neighborhood: The name of the neighborhood 
-    
     - num_parks: The number of public parks in the neighborhood 
-    
     - pop_density: The population density of the neighborhood (people per square mile) 
-    
     - avg_income: The average income of residents in the neighborhood 
 
  
@@ -246,7 +229,8 @@ Objective and Directions:
     Calculate the correlation between the number of parks and the average income of each neighborhood. Interpret the correlation coefficient.
     Based on your findings, provide recommendations to the city council about their plan to increase the number of public parks.
     Hints for Today's Workshop 18
-    Use pd.qcut(<column>, q=4) to turn a numeric value into a categorical valueUse pd.crosstab to put your table together (frequency distribution for 2 categorical variables)Use chi2_contingency from scipy.stats to carry out the Chi-Square TestUse pearsonr from scipy.stats to carry out any correlation calculations
+    Use pd.qcut(<column>, q=4) to turn a numeric value into a categorical valueUse pd.crosstab to put your table together (frequency distribution for 2 categorical variables)Use chi2_contingency from scipy.stats to carry 
+    out the Chi-Square TestUse pearsonr from scipy.stats to carry out any correlation calculations
      
     
     Starter Code
@@ -266,7 +250,7 @@ Objective and Directions:
 Text Processing for a Document
 Scenario: 
 
-    You are working for a company that deals with many text documents. The company is interested in processing these documents to extract specific information, clean the text, and standardize the format for consistency. To accomplish this, you have been given a Python script that uses the re (regular expressions) module to perform various text processing tasks on a sample text document. 
+    You are working for a company that deals with many text documents. The company is interested in processing these documents to extract specific information, clean the text, and standardize the format for consistency.      To accomplish this, you have been given a Python script that uses the re (regular expressions) module to perform various text processing tasks on a sample text document. 
 
 
 Problem statement:
@@ -278,9 +262,7 @@ Tasks to be performed:
     Find all occurrences of the word ‘sentence' in the string: ‘This is a sentence. This is also a sentence. Is this a sentence too?’.
     Extract all words from the list of email addresses given below. Also, extract the domain names from these email addresses.
     martin@gmail.com 
-    
     thomas@stanford.edu 
-    
     rose_11@fashion.now.inc 
     
     Extract all the phone numbers from the given string:
@@ -366,40 +348,26 @@ Problem Statement:
     
     Initialization: 
     - Import the required libraries. 
-    
     - Load the dataset into `df`. 
-    
     - Calculate `Revenue` by multiplying `Quantity` and `Unit_Price`. 
-    
     - Format the `Date` column to `datetime`. 
-    
      Total Revenue by Store: 
     - Using `seaborn`, visualize a bar chart with stores on the x-axis and revenue on the y-axis, titled "Total Revenue per Store". 
-    
      Monthly Revenue Analysis: 
     - Extract the month from `Date` and save the value in a `Month` variable. 
-    
     - Calculate the monthly revenue and illustrate the trend using a Seaborn line chart. 
-    
      Top Products Analysis: 
     - Calculate the total quantity sold for each product. 
-    
     - Highlight the top five products with a bar chart. 
-    
      Category-wise Quantity Analysis: 
     - Compute the total quantity for each category. 
-    
     - Represent the results with a Plotly graph. 
-    
      Revenue Pivot Table: 
     - Produce a pivot table showcasing revenue sums with stores as rows and months as columns. 
-    
      Analysis of Store Unit Prices: 
     - Show the average unit price for products at each store using a Seaborn bar chart. 
-    
      Category Revenue Distribution: 
     - Depict revenue distributions per category through a Seaborn box plot. 
-    
      Quantity-Revenue Relationship: 
     - Demonstrate the correlation between `Quantity` and `Revenue` across categories using a Plotly graph. 
 

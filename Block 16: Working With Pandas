@@ -1,7 +1,7 @@
 # Import the necessary libraries
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 # Load the dataset into a Pandas DataFrame.
 df = pd.DataFrame()
@@ -57,3 +57,64 @@ avg_floor_cost
 #Analyze the average price based on the house condition
 house_condition_price = df.groupby('condition')['price'].mean()
 house_condition_price
+
+
+#Create a histogram showing the distribution of house prices.
+df.sort_values(by ='price', ascending = True, inplace=True)
+df.reset_index(inplace = True)
+plt.hist(df['price'],  bins=100, alpha=0.5, label='price')
+plt.xlabel('Price ()')
+plt.ylabel('Frequency')
+plt.title('Price Distribution of Homes')
+plt.show()
+
+#Create scatter plots to visualize the relationships between price and other numeric features.
+scatter_matrix(df, alpha=0.2, figsize=(40, 40), diagonal="kde")[:,0] #I really like how this looks, but it is quite an expensive calculation.
+
+#Count the occurrences of each city.
+city_ = pd.DataFrame(df.groupby('city').count())
+city_data = {'City':list(df['city'].unique()), 'Count':list(city_['date'])}
+city_Count = pd.DataFrame(city_data)
+city_Count
+print(city_Count)
+
+#FINDINGS:
+"""
+Note: I replaced the houses with the prices of 0.00 with the average of 551,962.0 before running any statistics. 
+This is also why the most common price was $551,962.00
+
+Calculate the average house price using .mean() : $557,842.57
+
+Find the most common number of bedrooms and bathrooms:
+3 bedrooms
+2.5 bathrooms
+
+Identify any correlation between the house price and other numeric features (e.g., sqft_living, waterfront, and view) using .corr() functions:
+Listed here are some of the most positive pearson correlation coefficents.
+view (0.237171)
+bathrooms(0.336010)
+sqft_above (0.375177)
+sqft_living(0.439699)
+
+Calculate the average price of waterfront and non-waterfront houses.
+Water/no Water : Price
+Non-waterfront : 551,021.80
+Waterfront : 1,501,800.00
+
+Determine the average price of houses with different numbers of floors.
+Floors : AVG_Price
+1.0 : 463118.199172
+1.5 : 584908.470721
+2.0 : 654080.876864
+2.5 : 983863.390244
+3.0 : 570469.781250
+3.5 : 829250.000000
+
+Analyze the average price based on the house condition.
+condition : AVG_price
+1 : 306633.333333
+2 : 341622.562500
+3 : 554719.186435
+4 : 539819.369808
+5 : 649730.094253
+"""

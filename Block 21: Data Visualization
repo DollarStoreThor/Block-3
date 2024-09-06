@@ -1,1 +1,197 @@
 
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+
+#Load the transactions.csv file into a DataFrame
+df = pd.read_csv('transactions.csv')
+df.head()
+
+
+#Calculate the revenue for each transaction
+df['Revenue'] = df['Unit_Price'] * df['Quantity']
+df
+
+
+#Convert the "Date" column from string to date/time format
+df['Date'] = pd.to_datetime(df['Date'])
+df
+
+
+##Plot the distribution of total revenue across different stores
+plt.hist(df.groupby('Revenue')['Store'].sum())
+
+
+#Add the title as "Total Revenue per Store" and provide the label for the y-axis
+plt.hist(df.groupby('Revenue')['Store'].sum())
+plt.ylabel("Revenue")
+plt.xlabel("Store")
+plt.title("Total Revenue per Store")
+plt.show()
+
+
+#Extract the month from the "Date" column
+df['Month'] = df['Date'].dt.month
+df
+
+
+#Calculate the monthly revenue
+monthly_rev = df.groupby('Month')['Revenue'].sum()
+monthly_rev
+'''
+Month
+1     365986.810273
+2     426452.461588
+3     398036.137292
+4     464157.221569
+5     429056.766214
+6     443771.123636
+7     413733.554818
+8     468731.025016
+9     417630.696108
+10    425184.599157
+11    445097.859105
+12    449295.068919
+Name: Revenue, dtype: float64
+'''
+
+#Plot the monthly revenue trend
+plt.plot(monthly_rev)
+
+#Identify the top five products by sales volume.
+prod_sales_vol = df.groupby('Product')['Quantity'].sum()
+prod_sales_vol.rank(ascending = False)
+'''
+Product
+Charger       3.0
+Headphones    4.0
+Laptop        2.0
+Mobile        1.0
+Tablet        5.0
+Name: Quantity, dtype: float64
+'''
+
+
+#Calculate the total quantity sold for each product category
+cate_sales_vol = df.groupby('Category')['Quantity'].sum()
+cate_sales_vol
+'''
+Category
+Accessories    3505
+Electronics    3411
+Gadgets        3284
+Name: Quantity, dtype: int64
+'''
+
+
+#Create a pivot table to show monthly revenue for each store
+pd.pivot_table(data=df, index=['Month', 'Store'], values='Revenue',  aggfunc='sum')
+'''
+	Revenue
+Month	Store	
+1	Store_A	155844.177361
+Store_B	100283.584550
+Store_C	109859.048362
+2	Store_A	156625.914028
+Store_B	113986.074279
+Store_C	155840.473281
+3	Store_A	80540.518435
+Store_B	150940.806224
+Store_C	166554.812633
+4	Store_A	138393.315190
+Store_B	151849.663380
+Store_C	173914.242999
+5	Store_A	160807.271068
+Store_B	151298.035767
+Store_C	116951.459379
+6	Store_A	160766.094426
+Store_B	105211.656341
+Store_C	177793.372868
+7	Store_A	139729.307324
+Store_B	139308.339530
+Store_C	134695.907964
+8	Store_A	170930.819935
+Store_B	146628.049065
+Store_C	151172.156017
+9	Store_A	138720.309507
+Store_B	138825.608439
+Store_C	140084.778161
+10	Store_A	173776.625893
+Store_B	117974.432364
+Store_C	133433.540899
+11	Store_A	130279.573854
+Store_B	118404.157375
+Store_C	196414.127876
+12	Store_A	159697.284482
+Store_B	128447.501019
+Store_C	161150.283418
+'''
+
+
+#Plot the average unit price for products at each store.
+storeA = df.where(df['Store'] == 'Store_A').dropna()
+storeB = df.where(df['Store'] == 'Store_B').dropna()
+storeC = df.where(df['Store'] == 'Store_C').dropna()
+
+storeA_product_unitavg = pd.pivot_table(data=storeA, index=['Product'], values='Unit_Price', aggfunc='mean')
+plt.scatter(x=storeA_product_unitavg.index, y =storeA_product_unitavg.values, label='Store A') 
+storeB_product_unitavg = pd.pivot_table(data=storeB, index=['Product'], values='Unit_Price', aggfunc='mean')
+plt.scatter(x=storeB_product_unitavg.index, y =storeB_product_unitavg.values, label='Store B') 
+storeC_product_unitavg = pd.pivot_table(data=storeC, index=['Product'], values='Unit_Price', aggfunc='mean')
+plt.scatter(x=storeC_product_unitavg.index, y =storeC_product_unitavg.values, label='Store C') 
+
+plt.legend()
+plt.show()
+
+plt.pie(storeA_product_unitavg['Unit_Price'], labels = storeA_product_unitavg.index) 
+plt.title('Store A')
+plt.show()
+
+plt.pie(storeB_product_unitavg['Unit_Price'], labels = storeC_product_unitavg.index)
+plt.title('Store B')
+plt.show()
+
+plt.pie(storeC_product_unitavg['Unit_Price'], labels = storeB_product_unitavg.index)
+plt.title('Store C')
+plt.show()
+
+
+#Plot the revenue distribution for each product category.
+rev_cat1 = df.where(df['Category'] == 'Gadgets').dropna()
+rev_cat2 = df.where(df['Category'] == 'Accessories').dropna()
+rev_cat3 = df.where(df['Category'] == 'Electronics').dropna()
+
+rev_cat1['Z-score'] = stats.zscore(df['Revenue'])
+rev_cat2['Z-score'] = stats.zscore(df['Revenue'])
+rev_cat3['Z-score'] = stats.zscore(df['Revenue'])
+
+plt.boxplot(x=rev_cat1['Revenue'])
+plt.title('rev_cat1')
+plt.show()
+plt.boxplot(x=rev_cat2['Revenue'])
+plt.title('rev_cat2')
+plt.show()
+plt.boxplot(x=rev_cat3['Revenue'])
+plt.title('rev_cat3')
+plt.show()
+
+
+#Plot a scatter plot to show the relation between Quantity and Revenue across different product categories.
+qcr1 = df.where(df['Category'] == 'Gadgets').dropna()
+qcr2 = df.where(df['Category'] == 'Accessories').dropna()
+qcr3 = df.where(df['Category'] == 'Electronics').dropna()
+
+QCR1 = pd.pivot_table(data=qcr1, index = ['Quantity'], values=['Revenue'])
+QCR2 = pd.pivot_table(data=qcr2, index = ['Quantity'], values=['Revenue'])
+QCR3 = pd.pivot_table(data=qcr3, index = ['Quantity'], values=['Revenue'])
+
+plt.scatter(x=QCR1.index, y =QCR1.values, label='Gadgets', alpha=0.90)
+plt.scatter(x=QCR2.index, y =QCR2.values, label='Accessories', alpha=0.90)
+plt.scatter(x=QCR3.index, y =QCR3.values, label='Electronics', alpha=0.90)
+
+plt.legend()
+plt.title('Quantity Sold vs Revenue per Category')    
+plt.show()

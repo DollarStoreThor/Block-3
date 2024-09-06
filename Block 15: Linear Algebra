@@ -39,3 +39,23 @@ EX output: array([    79.35099648, -12162.41836142,  -1854.29828123,    343.1412
 
 c = linear_regression(X, y)
 c
+
+
+#House estimation Function
+def estimate_house_price(coefficients, new_features):
+"""
+Create the function estimate_house_price(coefficients, new_features) that predicts the price of the house.
+- Calculate the estimated price with the dot product of the coefficients and the new features.
+- Create a new house matrix with the following features:
+House area = 1800 sq ft
+Bedrooms = 3
+Bathrooms = 2
+Garage size = 400 sq ft
+- predicts the price of the new house.
+
+EX output: 239892.44640047377
+"""
+    return np.matmul(coefficients, new_features)
+
+new_features = np.array([1800, 3, 2, 400])
+estimate_house_price(c, new_features)

@@ -1,1 +1,405 @@
+import pandas as pd
+import numpy as np
+
+###Load the Dataset###
+df = pd.read_csv("titanic.csv")
+
+### Explore the Dataset ###
+print(f"HEAD\n___________\n{df.head()}, \n\nTAIL\n__________\n  {df.tail()},\n\nDESC\n__________\n{df.describe()}, \n\nTYPES\n________\n{df.dtypes}\n")
+'''
+HEAD
+___________
+             Survived  Pclass                                          Name  \
+PassengerId                                                                   
+892             False       3                              Kelly, Mr. James   
+893              True       3              Wilkes, Mrs. James (Ellen Needs)   
+894             False       2                     Myles, Mr. Thomas Francis   
+895             False       3                              Wirz, Mr. Albert   
+896              True       3  Hirvonen, Mrs. Alexander (Helga E Lindqvist)   
+
+                Sex   Age  SibSp  Parch   Ticket       Fare Embarked  \
+PassengerId                                                            
+892            male  34.5      0      0   330911   7.828125        Q   
+893          female  47.0      1      0   363272   7.000000        S   
+894            male  62.0      0      0   240276   9.687500        Q   
+895            male  27.0      0      0   315154   8.664062        S   
+896          female  22.0      1      1  3101298  12.289062        S   
+
+             normalized_fare  
+PassengerId                   
+892                 0.015274  
+893                 0.013657  
+894                 0.018906  
+895                 0.016907  
+896                 0.023972  , 
+
+TAIL
+__________
+               Survived  Pclass                          Name     Sex  \
+PassengerId                                                           
+1305            False       3            Spector, Mr. Woolf    male   
+1306             True       1  Oliva y Ocana, Dona. Fermina  female   
+1307            False       3  Saether, Mr. Simon Sivertsen    male   
+1308            False       3           Ware, Mr. Frederick    male   
+1309            False       3      Peter, Master. Michael J    male   
+
+                   Age  SibSp  Parch              Ticket        Fare Embarked  \
+PassengerId                                                                     
+1305         30.265625      0      0           A.5. 3236    8.046875        S   
+1306         39.000000      0      0            PC 17758  108.875000        C   
+1307         38.500000      0      0  SOTON/O.Q. 3101262    7.250000        S   
+1308         30.265625      0      0              359309    8.046875        S   
+1309         30.265625      1      1                2668   22.359375        C   
+
+             normalized_fare  
+PassengerId                   
+1305                0.015701  
+1306                0.212402  
+1307                0.014145  
+1308                0.015701  
+1309                0.043640  ,
+
+DESC
+__________
+           Pclass         Age       SibSp       Parch        Fare  \
+count  418.000000  418.000000  418.000000  418.000000  417.000000   
+mean     2.265550   30.281250    0.447368    0.392344   35.625000   
+std      0.841838   12.632812    0.896760    0.981429         inf   
+min      1.000000    0.170044    0.000000    0.000000    0.000000   
+25%      1.000000   23.000000    0.000000    0.000000    7.894531   
+50%      3.000000   30.265625    0.000000    0.000000   14.453125   
+75%      3.000000   35.750000    1.000000    0.000000   31.500000   
+max      3.000000   76.000000    8.000000    9.000000  512.500000   
+
+       normalized_fare  
+count       417.000000  
+mean          0.069519  
+std           0.109070  
+min           0.000000  
+25%           0.015404  
+50%           0.028198  
+75%           0.061462  
+max           1.000000  , 
+
+TYPES
+________
+Survived               bool
+Pclass                 int8
+Name                 string
+Sex                category
+Age                 float16
+SibSp                  int8
+Parch                  int8
+Ticket               string
+Fare                float16
+Embarked           category
+normalized_fare     float16
+
+
+HEAD
+___________
+             Survived  Pclass                                          Name  \
+PassengerId                                                                   
+892             False       3                              Kelly, Mr. James   
+893              True       3              Wilkes, Mrs. James (Ellen Needs)   
+894             False       2                     Myles, Mr. Thomas Francis   
+895             False       3                              Wirz, Mr. Albert   
+896              True       3  Hirvonen, Mrs. Alexander (Helga E Lindqvist)   
+
+                Sex   Age  SibSp  Parch   Ticket       Fare Embarked  \
+PassengerId                                                            
+892            male  34.5      0      0   330911   7.828125        Q   
+893          female  47.0      1      0   363272   7.000000        S   
+894            male  62.0      0      0   240276   9.687500        Q   
+895            male  27.0      0      0   315154   8.664062        S   
+896          female  22.0      1      1  3101298  12.289062        S   
+
+             normalized_fare  
+PassengerId                   
+892                 0.015274  
+893                 0.013657  
+894                 0.018906  
+895                 0.016907  
+896                 0.023972  , 
+
+TAIL
+__________
+               Survived  Pclass                          Name     Sex  \
+PassengerId                                                           
+1305            False       3            Spector, Mr. Woolf    male   
+1306             True       1  Oliva y Ocana, Dona. Fermina  female   
+1307            False       3  Saether, Mr. Simon Sivertsen    male   
+1308            False       3           Ware, Mr. Frederick    male   
+1309            False       3      Peter, Master. Michael J    male   
+
+                   Age  SibSp  Parch              Ticket        Fare Embarked  \
+PassengerId                                                                     
+1305         30.265625      0      0           A.5. 3236    8.046875        S   
+1306         39.000000      0      0            PC 17758  108.875000        C   
+1307         38.500000      0      0  SOTON/O.Q. 3101262    7.250000        S   
+1308         30.265625      0      0              359309    8.046875        S   
+1309         30.265625      1      1                2668   22.359375        C   
+
+             normalized_fare  
+PassengerId                   
+1305                0.015701  
+1306                0.212402  
+1307                0.014145  
+1308                0.015701  
+1309                0.043640  ,
+
+DESC
+__________
+           Pclass         Age       SibSp       Parch        Fare  \
+count  418.000000  418.000000  418.000000  418.000000  417.000000   
+mean     2.265550   30.281250    0.447368    0.392344   35.625000   
+std      0.841838   12.632812    0.896760    0.981429         inf   
+min      1.000000    0.170044    0.000000    0.000000    0.000000   
+25%      1.000000   23.000000    0.000000    0.000000    7.894531   
+50%      3.000000   30.265625    0.000000    0.000000   14.453125   
+75%      3.000000   35.750000    1.000000    0.000000   31.500000   
+max      3.000000   76.000000    8.000000    9.000000  512.500000   
+
+       normalized_fare  
+count       417.000000  
+mean          0.069519  
+std           0.109070  
+min           0.000000  
+25%           0.015404  
+50%           0.028198  
+75%           0.061462  
+max           1.000000  , 
+
+TYPES
+________
+Survived               bool
+Pclass                 int8
+Name                 string
+Sex                category
+Age                 float16
+SibSp                  int8
+Parch                  int8
+Ticket               string
+Fare                float16
+Embarked           category
+normalized_fare     float16
+'''
+
+
+### Index Manipulation ###
+print('index #10\n', df.iloc[10], '\n')
+print(df.loc[:, ['Pclass', 'Survived']], '\n')
+df.set_index(['PassengerId'], inplace = True)
+df
+'''
+index #10
+ PassengerId                 902
+Survived                      0
+Pclass                        3
+Name           Ilieff, Mr. Ylio
+Sex                        male
+Age                         NaN
+SibSp                         0
+Parch                         0
+Ticket                   349220
+Fare                     7.8958
+Cabin                       NaN
+Embarked                      S
+Name: 10, dtype: object 
+
+     Pclass  Survived
+0         3         0
+1         3         1
+2         2         0
+3         3         0
+4         3         1
+..      ...       ...
+413       3         0
+414       1         1
+415       3         0
+416       3         0
+417       3         0
+
+[418 rows x 2 columns] 
+
+Survived	Pclass	Name	Sex	Age	SibSp	Parch	Ticket	Fare	Cabin	Embarked
+PassengerId											
+892	0	3	Kelly, Mr. James	male	34.5	0	0	330911	7.8292	NaN	Q
+893	1	3	Wilkes, Mrs. James (Ellen Needs)	female	47.0	1	0	363272	7.0000	NaN	S
+894	0	2	Myles, Mr. Thomas Francis	male	62.0	0	0	240276	9.6875	NaN	Q
+895	0	3	Wirz, Mr. Albert	male	27.0	0	0	315154	8.6625	NaN	S
+896	1	3	Hirvonen, Mrs. Alexander (Helga E Lindqvist)	female	22.0	1	1	3101298	12.2875	NaN	S
+...	...	...	...	...	...	...	...	...	...	...	...
+1305	0	3	Spector, Mr. Woolf	male	NaN	0	0	A.5. 3236	8.0500	NaN	S
+1306	1	1	Oliva y Ocana, Dona. Fermina	female	39.0	0	0	PC 17758	108.9000	C105	C
+1307	0	3	Saether, Mr. Simon Sivertsen	male	38.5	0	0	SOTON/O.Q. 3101262	7.2500	NaN	S
+1308	0	3	Ware, Mr. Frederick	male	NaN	0	0	359309	8.0500	NaN	S
+1309	0	3	Peter, Master. Michael J	male	NaN	1	1	2668	22.3583	NaN	C
+418 rows × 11 columns
+'''
+
+
+### Data Filtering ### 
+mask_survived = df['Survived'] == 1
+df[mask_survived].to_csv("Survived_titanic.csv")
+
+
+### Memory Optimization ###
+pre_optimized = df.memory_usage()
+for col in df.columns:
+    try:
+        print(col, " max:", df[col].max())
+    except:
+        continue
+df = df.astype({'Survived': 'bool',
+                'Pclass': 'int8',
+                'Name': 'string',
+                'Sex': 'category',
+                'Age': 'float16',
+                'SibSp': 'int8',
+                'Parch': 'int8',
+                'Ticket': 'string',
+                'Fare': 'float32',
+                'Cabin': 'category',
+                'Embarked': 'category'})
+post_optimized = df.memory_usage()
+save = pre_optimized - post_optimized
+print("\nSize of Data SAVINGS:  \n__________\n", save, '\n', '\nSize Sum SAVINGS: ', save.sum(), '\n', f'{100*post_optimized.sum()/pre_optimized.sum()}% Savings')
+df.dtypes
+'''
+Survived  max: 1
+Pclass  max: 3
+Name  max: van Billiard, Master. Walter John
+Sex  max: male
+Age  max: 76.0
+SibSp  max: 8
+Parch  max: 9
+Ticket  max: W.E.P. 5734
+Fare  max: 512.3292
+Embarked  max: S
+
+Size of Data SAVINGS:  
+__________
+ Index          0
+Survived    2926
+Pclass      2926
+Name           0
+Sex         2802
+Age         2508
+SibSp       2926
+Parch       2926
+Ticket         0
+Fare        1672
+Cabin        214
+Embarked    2794
+dtype: int64 
+ 
+Size Sum SAVINGS:  21694 
+ 45.93799840510367% Savings
+Survived        bool
+Pclass          int8
+Name          string
+Sex         category
+Age          float16
+SibSp           int8
+Parch           int8
+Ticket        string
+Fare         float32
+Cabin       category
+Embarked    category
+dtype: object
+'''
+
+
+### Handle Missing Data ###
+#I dont think it would be a good idea to use dropna here it lost too much good data
+#df.dropna()
+print(df.isnull().sum())
+#Too many missing data points for cabin to extract out some useful information, so I have just removed the column
+df = df.drop(['Cabin'], axis=1)
+print(df.isnull().sum())
+#pulling out a new df of booleans where the data looks like a df of true and false, true values mean the age is null
+update_values_df = pd.DataFrame(df['Age'].isnull())
+#updating the true values (origianl age null ) to be the average age from the original df
+update_values_df.where(update_values_df['Age'] == False, df['Age'].mean(), inplace = True)
+update_values_df.where(update_values_df['Age'] != False, inplace = True)
+df.update(update_values_df)
+df = df.astype({'Age':'float16',
+                'Fare':'float16'})
+print(df.isnull().sum())
+'''
+Survived      0
+Pclass        0
+Name          0
+Sex           0
+Age          86
+SibSp         0
+Parch         0
+Ticket        0
+Fare          1
+Cabin       327
+Embarked      0
+dtype: int64
+Survived     0
+Pclass       0
+Name         0
+Sex          0
+Age         86
+SibSp        0
+Parch        0
+Ticket       0
+Fare         1
+Embarked     0
+dtype: int64
+Survived    0
+Pclass      0
+Name        0
+Sex         0
+Age         0
+SibSp       0
+Parch       0
+Ticket      0
+Fare        1
+Embarked    0
+dtype: int64
+'''
+
+
+### Data Preprocessing ###
+df['normalized_fare'] = (df['Fare']-df['Fare'].min())/(df['Fare'].max()-df['Fare'].min())
+df.corr(method='pearson', numeric_only=True)
+'''
+	Survived	Pclass	Age	SibSp	Parch	Fare	normalized_fare
+Survived	1.000000	-0.108615	0.000006	0.099943	0.159120	0.191508	0.191508
+Pclass	-0.108615	1.000000	-0.440845	0.001087	0.018721	-0.577101	-0.577102
+Age	0.000006	-0.440845	1.000000	-0.079518	-0.045071	0.329108	0.329100
+SibSp	0.099943	0.001087	-0.079518	1.000000	0.306895	0.171530	0.171543
+Parch	0.159120	0.018721	-0.045071	0.306895	1.000000	0.230068	0.230096
+Fare	0.191508	-0.577101	0.329108	0.171530	0.230068	1.000000	1.000000
+normalized_fare	0.191508	-0.577102	0.329100	0.171543	0.230096	1.000000	1.000000
+'''
+
+
+### Groupby Operations ###
+g_surv_vs_age = df.groupby('Survived')['Age'].mean()
+g_surv_vs_age
+g_surv_vs_fare = df.groupby('Survived')['Fare'].mean()
+g_surv_vs_fare
+g_emb_vs_surv = df.groupby('Embarked')['Survived'].mean()
+g_emb_vs_surv
+'''
+Embarked
+C    0.392157
+Q    0.521739
+S    0.325926
+Name: Survived, dtype: float64
+'''
+
+
+### Data Visualization ###
+#df.plot()
+df_without_np_bools = df.astype({'Survived': 'int8'})#this is to fix problems with the plotting of booleans
+pd.plotting.scatter_matrix(df_without_np_bools, alpha=0.2, figsize=(20, 20), diagonal="hist")
+df_without_survived = df.drop(['Survived'], axis = 1)
+pd.plotting.scatter_matrix(df_without_survived, alpha=0.2, figsize=(20, 20), diagonal="hist")
 

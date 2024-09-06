@@ -5,7 +5,7 @@
 
 ###        UNIT #3 : Applied Data Science with Python
 
-Block14: NumPy
+Block 14: NumPy
 
 Overview:
 

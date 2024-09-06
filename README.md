@@ -157,6 +157,51 @@ A bar graph to count the occurrences of each city
 
 Block 17: Statistics Fundamentals
 
+
+Problem Statement 
+
+As a data analyst for a retail company, your task is to conduct a comprehensive statistical analysis of the sales data using Python. 
+
+Scenario 
+
+You are a data analyst working for a retail company, tasked with analyzing sales data to gain comprehensive insights into the performance of different products. The dataset provided contains information about the sales of various products over a certain time period. Your goal is to perform a thorough statistical analysis using Python to answer specific questions about the sales data and present meaningful conclusions. 
+
+Dataset 
+
+Product A: [235, 189, 340, 270, 305, 210, 320, 265, 315, 280, 250, 200] 
+
+Product B: [320, 190, 340, 270, 310, 260, 315, 290, 320, 275, 230, 320] 
+
+Product C: [270, 290, 280, 240, 260, 210, 200, 340, 295, 280, 260, 310] 
+
+Tasks to perform: 
+
+How does the total sales vary across different time periods within the dataset? 
+What is the daily average sales for each week/month during the observed time period? 
+Are there any seasonal trends or patterns in the sales data? 
+Can you identify any specific products that experienced significant sales fluctuations? 
+Which product categories contributed the most to the total sales? 
+Are there any correlations between sales of different products? 
+How does the coefficient of variation differ for various product categories? 
+Can you determine any outliers in the sales data, and how might they affect the analysis? 
+Is there any indication of improvement or decline in sales performance over time? 
+How can you utilize the sales data to inform marketing and inventory strategies? 
+Interpret the result. 
+Directions for the Workshop: 
+
+Calculate the total sales during the time period covered by the dataset. 
+Find the average daily sales during this time period. 
+Identify the best-selling product (highest sales) and its corresponding sales value. 
+Determine the worst-selling product (lowest sales) and its corresponding sales value. 
+Calculate the range of sales to understand the variability in the data. 
+Compute the standard deviation of sales to assess the spread of sales values. 
+Identify if the sales data is positively or negatively skewed. 
+Calculate the coefficient of variation for the sales data to compare the relative variability among products. 
+Determine the 25th percentile of sales, representing the sales value below which 25% of the products fall. 
+Compute the interquartile range (IQR) of sales to understand the middle spread of the data. 
+Finally, interpret the result. 
+
+
 Block 18: Advanced Statistics
 
 Block 19: Data Analysis

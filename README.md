@@ -1,6 +1,6 @@
-# Block-3
+# UNIT-3
 
-My repository for block 3 of my fullstack AI and ML Course
+My repository for UNIT 3 of my fullstack AI and ML Course
 
 UNIT #3 : Applied Data Science with Python
 

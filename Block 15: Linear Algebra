@@ -1,1 +1,41 @@
+import numpy as np
 
+#Split the input dataset into two matrices: x contains all the features of the house, and y contains the target variable (price).
+data = np.array([[1500,3,2,400,200000],
+                 [1800,4,3,500,250000],
+                 [1200,2,1,300,180000],
+                 [2100,5,3,550,280000],
+                 [1400,3,2,350,190000],
+                 [1600,4,2,450,220000],
+                 [1300,3,1,320,185000],
+                 [2000,4,3,480,270000],
+                 [1750,3,2,420,240000],
+                 [2400,5,4,600,320000],
+                 [1100,2,1,280,160000],
+                 [1850,4,3,530,290000],
+                 [2500,5,4,620,340000],
+                 [1950,4,2,490,280000],
+                 [1450,3,2,380,210000],
+                 [1350,2,1,310,175000],
+                 [2200,4,3,530,310000],
+                 [2050,4,3,520,290000],
+                 [1650,3,2,410,225000],
+                 [2300,5,4,590,330000]])
+
+X = data[:, :-1]
+y = data[:, -1]
+
+#Linear Regression Function
+def linear_regression(independent, dependent):
+"""
+Create a function linear_regression() to calculate the coefficients of the linear equation using the formula: coefficients=〖(X^T.X)〗^(-1).X^T.y
+- Use NumPy functions to perform the matrix operations shown in the formula.
+- The function should return the “coefficients” value as an output.
+
+EX output: array([    79.35099648, -12162.41836142,  -1854.29828123,    343.14126097])
+"""
+    coeff = np.matmul(np.matmul(np.linalg.inv(np.matmul(independent.transpose(),independent)), independent.transpose()),dependent)
+    return coeff
+
+c = linear_regression(X, y)
+c

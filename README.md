@@ -373,3 +373,7 @@ Problem Statement:
      Quantity-Revenue Relationship: 
     - Demonstrate the correlation between `Quantity` and `Revenue` across categories using a Plotly graph. 
 
+![Block_21_Bar_graph](https://github.com/user-attachments/assets/79a632dd-f623-414c-9b42-06f2e8b582cf)
+
+
+

@@ -1,1 +1,85 @@
 
+
+import numpy as np 
+import functools
+
+
+# Sample weather data in an array format [date, temperature, humidity, precipitation.]
+weather_data = np.array([
+    ["2023-07-01", 30, 60, 0.1],
+    ["2023-07-02", 31, 62, 0.2],
+    ["2023-07-03", 29, 65, 0.0],
+    ["2023-07-04", 33, 68, 0.5],
+    ["2023-07-05", 34, 70, 0.3],
+    ["2023-07-06", 32, 63, 0.1],
+    ["2023-07-07", 30, 61, 0.0],
+])
+
+#Calculate the average temperature for the entire dataset
+temps = np.array(weather_data[:,1],dtype=int)
+avg_temp = np.mean(temps)
+print("np.temps array: ", temps)
+print("average temp: ", avg_temp)
+
+#Find the day with the highest temperature.
+max_temp = np.max(temps)
+max_temp_index = np.argmax(temps)
+max_temp_day = weather_data[max_temp_index,0]
+print(f"max_temp: {max_temp}, max_temp_index: {max_temp_index}, max_temp_day: {max_temp_day}")
+
+#Compute the temperature fluctuations over time.
+d2d_temp_flux= []
+for day in range(len(temps)-1):
+    nextDay = day+1
+    d2d_temp_flux.append(temps[nextDay] - temps[day])
+print(d2d_temp_flux)
+
+#Identify days with high precipitation (precipitation above a certain threshold).
+rainfall = np.array(weather_data[:,-1],dtype=float)
+rainThreshold = 0.2
+rainy_day_indecies = np.where(rainfall > rainThreshold)
+rainy_days = weather_data[rainy_day_indecies,0]
+print(f"index of rainy days: {rainy_day_indecies}, dates: {rainy_days}")
+
+#Calculate the average humidity for days with high precipitation.
+humidity_and_high_precipitaiton = np.array(weather_data[rainy_day_indecies,-2], dtype=int)
+avg_HumAndHP = np.mean(humidity_and_high_precipitaiton)
+print(avg_HumAndHP)
+
+#Calculate the total precipitation for the entire dataset.
+tot_precip = functools.reduce(lambda x,y: x+y, rainfall)
+print(tot_precip)
+
+#Find the day with the lowest temperature.
+coldest_temp = np.min(temps)
+coldest_temp_index = np.argmin(temps)
+date_of_cday = weather_data[coldest_temp_index,0]
+print(f"coldest_temp: {coldest_temp}, index of coldest day: {coldest_temp_index}, date: {date_of_cday}")
+
+#Filter data for summer days (temperature above a certain threshold).
+summer_temp_threshold = 30
+summer_day_indecies = np.argwhere(temps > summer_temp_threshold)
+summer_dates = weather_data[summer_day_indecies,0]
+summer_day_indecies, summer_dates
+
+
+#Calculate the average temperature for summer days.
+summer_temps = np.array(weather_data[summer_day_indecies,1], dtype=int)
+summer_temp_avg = np.mean(summer_temps)
+summer_temp_avg
+
+#Count the number of days with no precipitation.
+num_no_rain = rainfall.size - np.count_nonzero(rainfall)
+num_no_rain
+
+
+#OUTPUT
+print("The average temperature was: ", avg_temp)
+print(f"The hottest day was: {max_temp_day}, with a temperature of: {max_temp}")
+print(f"The day to day temperature fluxuations were: {d2d_temp_flux}")
+print(f"Days with a lot of rain: {rainy_days}, i.e. those above the limit of {rainThreshold} units of rain.")
+print(f"The average humidity from those rainy day was: {avg_HumAndHP}")
+print(f"The ammount of percipiation recievied this week: {tot_precip}")
+print(f"The coldest temperautre this week was: {coldest_temp} on: {date_of_cday}")
+print(f"The days above the threshold of {summer_temp_threshold} were: {summer_dates}, with an average temperature of: {summer_temp_avg}")
+print(f"The number of days with out rain: {num_no_rain}")

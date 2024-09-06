@@ -374,6 +374,7 @@ Problem Statement:
     - Demonstrate the correlation between `Quantity` and `Revenue` across categories using a Plotly graph. 
 
 ![Block_21_Bar_graph](https://github.com/user-attachments/assets/79a632dd-f623-414c-9b42-06f2e8b582cf)
-
-
+![Block_21_Scatter_category](https://github.com/user-attachments/assets/a400467d-e2ab-4d3a-87cf-642f060f2a36)
+![Block_21_Revenue_boxplot](https://github.com/user-attachments/assets/736205cc-5307-4fab-8018-a18210cab362)
+![Block_21_Rev_vs_Quantity](https://github.com/user-attachments/assets/78667823-8dac-44e9-acba-7c73c5a35654)
 

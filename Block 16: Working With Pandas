@@ -36,3 +36,24 @@ df = pd.DataFrame(df.astype({'price':'int64',
                              'city':'string'}))
 df
 print(f"DataFrame shape(num of rows, num of cols): {df.shape}\nDataFrame size(num of elements): {df.size}\n \nColumn NaN's:\n----------------\n{np.sum(df.isna())}, \n\n{df.dtypes}")
+
+
+#Average house price.
+mean_of_df = df.mean(numeric_only=True)
+print(f"Mean of the Data:\n______________________________________\n{mean_of_df}")
+
+#Find the most frequently occuring number of bedrooms and bathrooms.
+mode_of_df = df.mode()
+print(f"Mode of the Data:\n______________________________________\n{mode_of_df.iloc[0]}")
+
+#Identify any R^2 correlation between the house price and other numeric features.
+price_pearson_correlation = df.corr(method='pearson')
+price_pearson_correlation
+
+#Avg price of non and waterfront houses
+avg_floor_cost = df.groupby('floors')['price'].mean()
+avg_floor_cost
+
+#Analyze the average price based on the house condition
+house_condition_price = df.groupby('condition')['price'].mean()
+house_condition_price

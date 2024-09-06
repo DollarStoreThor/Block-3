@@ -3,3 +3,11 @@ import pandas as pd
 import numpy as np
 
 
+# Load the dataset into a Pandas DataFrame.
+df = pd.DataFrame()
+df = pd.read_csv(filepath_or_buffer='HousePrices.csv')
+
+df.set_index('date', inplace = True)
+
+df.sort_values(by ='price', ascending = False, inplace = True)
+df

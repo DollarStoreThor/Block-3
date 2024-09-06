@@ -1,1 +1,105 @@
+import numpy as np
+import pandas as pd
 
+# Given sales data for different products
+product_a_sales = np.array([235, 189, 340, 270, 305, 210, 320, 265, 315, 280, 250, 200])
+product_b_sales = np.array([320, 190, 340, 270, 310, 260, 315, 290, 320, 275, 230, 320])
+product_c_sales = np.array([270, 290, 280, 240, 260, 210, 200, 340, 295, 280, 260, 310])
+
+#Calculate the total sales during the period covered by the dataset:
+product_a_sales_total = np.sum(product_a_sales)
+product_b_sales_total = np.sum(product_b_sales)
+product_c_sales_total = np.sum(product_c_sales)
+
+#Find the average daily sales during this period:
+product_a_sales_average = np.mean(product_a_sales)
+product_b_sales_average = np.mean(product_b_sales)
+product_c_sales_average = np.mean(product_c_sales)
+
+#Identify the best-selling product (highest sales) and its corresponding sales value:
+e_max = np.argmax([product_a_sales_total, product_b_sales_total, product_c_sales_total])
+best_seller = ""
+if e_max == 0:
+    best_seller = "product A"
+elif e_max ==1:
+    best_seller = "product B"
+else: 
+    best_seller = "product C"
+print(f"The best selling product was {best_seller} with a total of: {max(product_a_sales_total, product_b_sales_total, product_c_sales_total)}")
+#The best selling product was product B with a total of: 3440
+
+#Determine the worst-selling product (lowest sales) and its corresponding sales value:
+e_min = np.argmin([product_a_sales_total, product_b_sales_total, product_c_sales_total])
+worst_seller = ""
+if e_min == 0:
+    worst_seller = "product A"
+elif e_min ==1:
+    worst_seller = "product B"
+else: 
+    worst_seller = "product C"
+print(f"The worst selling product was {worst_seller} with a total of: {min(product_a_sales_total, product_b_sales_total, product_c_sales_total)}")
+#The worst selling product was product A with a total of: 3179
+
+#Calculate the range of sales to understand the variability in the data:
+a_sales_range = max(product_a_sales) - min(product_a_sales)
+b_sales_range = max(product_b_sales) - min(product_b_sales)
+c_sales_range = max(product_c_sales) - min(product_c_sales)
+a_sales_range, b_sales_range, c_sales_range
+#(151, 150, 140)
+
+#Compute the standard deviation of sales to assess the spread of sales values:
+std_product_a = product_a_sales.std()
+std_product_b = product_b_sales.std()
+std_product_c = product_c_sales.std()
+print(std_product_a, std_product_b, std_product_c)
+#47.566546951496164 42.04825270514288 37.99442576074665
+
+Identify if the sales data is positively or negatively skewed:
+a_skew = pd.Series(product_a_sales).skew()
+b_skew = pd.Series(product_b_sales).skew()
+c_skew = pd.Series(product_c_sales).skew()
+a_skew, b_skew, c_skew
+#(-0.10925620638811724, -1.0459048230594985, -0.23342319599653025)
+
+#Calculate the coefficient of variation for the sales data to compare the relative variability among products:
+a_and_b_corrcoef = np.corrcoef(product_a_sales, product_b_sales)[0, 1]
+a_and_c_corrcoef = np.corrcoef(product_a_sales, product_c_sales)[0, 1]
+c_and_b_corrcoef = np.corrcoef(product_c_sales, product_b_sales)[0, 1]
+a_and_b_corrcoef, a_and_c_corrcoef, c_and_b_corrcoef
+#(0.5998340626355021, -0.13466107024683321, 0.06954880173575576)
+
+#Determine the 25th percentile of sales, representing the sales value below which 25% of the products fall:
+a_sales_25_percent, a_sales_75_percent = np.percentile(product_a_sales, [25, 75])
+b_sales_25_percent, b_sales_75_percent = np.percentile(product_b_sales, [25, 75])
+c_sales_25_percent, c_sales_75_percent = np.percentile(product_c_sales, [25, 75])
+print(a_sales_25_percent, a_sales_75_percent)
+print(b_sales_25_percent, b_sales_75_percent)
+print(c_sales_25_percent, c_sales_75_percent)
+
+#Compute the interquartile range (IQR) of sales to understand the middle spread of the data:
+a_sales_IQR = a_sales_75_percent - a_sales_25_percent
+b_sales_IQR = b_sales_75_percent - b_sales_25_percent
+c_sales_IQR = c_sales_75_percent - c_sales_25_percent
+print(a_sales_IQR, b_sales_IQR, c_sales_IQR)
+
+## Interpretation of Results:
+print(f"""Product A -- total:{product_a_sales_total}, avg {product_a_sales_average}, mn: {worst_seller}, rng: {a_sales_range}, std: {std_product_a}, skew: {a_skew}, 
+          corcoef of a&b:{a_and_b_corrcoef}, corcoef of a&c:{a_and_c_corrcoef} , 25thpercent : {a_sales_25_percent}, 75thpercent {a_sales_75_percent}, iqr:{a_sales_IQR}\n""") 
+
+print(f"""Product B -- total:{product_b_sales_total}, avg {product_b_sales_average},  mx: {best_seller}, rng: {b_sales_range}, std: {std_product_b}, skew: {b_skew}, 
+          corcoef of a&b:{a_and_b_corrcoef}, corcoef of b&c:{c_and_b_corrcoef} , 25thpercent : {b_sales_25_percent}, 75thpercent {b_sales_75_percent}, iqr:{b_sales_IQR}\n""") 
+
+print(f"""Product C -- total:{product_c_sales_total}, avg {product_c_sales_average}, Neither mx or mn, rng: {c_sales_range}, std: {std_product_c}, skew: {c_skew}, 
+          corcoef of c&b:{c_and_b_corrcoef}, corcoef of c&a:{a_and_c_corrcoef} , 25thpercent : {c_sales_25_percent}, 75thpercent {c_sales_75_percent}, iqr:{c_sales_IQR}\n""") 
+
+"""
+Product A -- total:3179, avg 264.9166666666667, mn: product A, rng: 151, std: 47.566546951496164, skew: -0.10925620638811724, 
+          corcoef of a&b:0.5998340626355021, corcoef of a&c:-0.13466107024683321 , 25thpercent : 228.75, 75thpercent 307.5, iqr:78.75
+
+Product B -- total:3440, avg 286.6666666666667,  mx: product B, rng: 150, std: 42.04825270514288, skew: -1.0459048230594985, 
+          corcoef of a&b:0.5998340626355021, corcoef of b&c:0.06954880173575576 , 25thpercent : 267.5, 75thpercent 320.0, iqr:52.5
+
+Product C -- total:3235, avg 269.5833333333333, Neither mx or mn, rng: 140, std: 37.99442576074665, skew: -0.23342319599653025, 
+          corcoef of c&b:0.06954880173575576, corcoef of c&a:-0.13466107024683321 , 25thpercent : 255.0, 75thpercent 291.25, iqr:36.25
+
+"""

@@ -1,1 +1,110 @@
+import pandas as pd
+from scipy.stats import chi2_contingency, pearsonr
+
+# Load the dataset
+df = pd.read_csv("sf_parks.csv")
+
+#Prepare data for chi-square test and perform chi-square test for population density
+# Transform Data to Quartile Data (Numerical -> Categorical)
+df['pop_density_quartiles'] = pd.qcut(df['pop_density'], q=4)
+df['avg_income_quartiles'] = pd.qcut(df['avg_income'], q=4)
+df['num_parks_quartiles'] = pd.qcut(df['num_parks'], q=4, duplicates='drop')
+copy_pop = pd.DataFrame(df['pop_density'])
+copy_inc = pd.DataFrame(df['avg_income'])
+copy_park = pd.DataFrame(df['num_parks'])
+
+# Create Frequency Table based on the two variables you are interested in
+contingency_table_pop = pd.crosstab(df['num_parks_quartiles'], df['pop_density_quartiles'])
+contingency_table_inc = pd.crosstab(df['num_parks_quartiles'], df['avg_income_quartiles'])
+
+#Perform chi-square test for average income.
+print("~~~ Null and Alternative Hypothesis ~~~")
+print("\nPopulation: H0 - The distribution of parks across neighborhoods is independent of the population density.")
+print("Population: H1 - The distribution of parks across neighborhoods is not independent of the population density.\n")
+
+print("\nIncome: H0 -  The distribution of parks across neighborhoods is independent of the average income.")
+print("Income: H1 -  The distribution of parks across neighborhoods is not independent of the average income.\n")
+
+res_pop = chi2_contingency(contingency_table_pop)
+res_inc = chi2_contingency(contingency_table_inc)
+
+print("~~~ Chi square values ~~~")
+print(f"Population Chi ---- Statistic : {res_pop[0]} , pvalue : {res_pop[1]} , Deg.Free. : {res_pop[2]}")
+print(f"Income Chi ---- Statistic : {res_inc[0]} , pvalue : {res_inc[1]} , Deg.Free. : {res_inc[2]}" )
+#OUTPUT:
+'''
+~~~ Null and Alternative Hypothesis ~~~
+
+Population: H0 - The distribution of parks across neighborhoods is independent of the population density.
+Population: H1 - The distribution of parks across neighborhoods is not independent of the population density.
+
+
+Income: H0 -  The distribution of parks across neighborhoods is independent of the average income.
+Income: H1 -  The distribution of parks across neighborhoods is not independent of the average income.
+
+~~~ Chi square values ~~~
+Population Chi ---- Statistic : 1.56301821748046 , pvalue : 0.9966517021996347 , Deg.Free. : 9
+Income Chi ---- Statistic : 12.944515438794614 , pvalue : 0.16513299448859434 , Deg.Free. : 9
+
+'''
+
+#Calculate correlations
+
+pop_vs_park_pearson = pearsonr(x=df['pop_density'], y=df['num_parks'], alternative='two-sided')
+inc_vs_park_pearson = pearsonr(x=df['avg_income'], y=df['num_parks'], alternative='two-sided')
+pop_CI = pop_vs_park_pearson.confidence_interval()
+inc_CI = inc_vs_park_pearson.confidence_interval()
+print("Population Pearson's R: ", pop_vs_park_pearson, "R^2: ", (pop_vs_park_pearson[0])**2, pop_CI)
+print("Income Pearson's R: ", inc_vs_park_pearson, "R^2: ", (inc_vs_park_pearson[0])**2, inc_CI)
+'''
+Population Pearson's R:  PearsonRResult(statistic=-0.03041420160442702, pvalue=0.7638814470642207) R^2:  0.0009250236592347311 ConfidenceInterval(low=-0.2254852926449059, high=0.1670015667757953)
+Income Pearson's R:  PearsonRResult(statistic=0.14457074319969426, pvalue=0.15126364023202526) R^2:  0.020900699789311944 ConfidenceInterval(low=-0.05336267779701083, high=0.3315733987841212)
+'''
+
+#CONCLUSIONS
+'''
+Is the distribution of parks across neighborhoods independent of population density? Use a chi-square test of independence to answer this question. Report the p-value, chi-square statistic, and degrees of freedom.
+
+- Null Hypothesis (H0): The distribution of parks across neighborhoods is independent of the population density. 
+- Alternate Hypothesis (H1): The distribution of parks across neighborhoods is not independent of the population density. 
+
+~~~ Chi square values ~~~
+Population Chi ---- Statistic : 1.56301821748046 , pvalue : 0.9966517021996347 , Deg.Free. : 9
+
+Chi square interpretation: 
+    Given the pvalue close to 1, I woulud accept the null hypothesis. i.e. there is not enough evidence here to reject the null infavor of the alternate hypothesis. The x2 Statistic here was 1.56 which is not very large, for X2 statistics. 
+Is the distribution of parks across neighborhoods independent of the average income? Use a chi-square test of independence to answer this question. Report the p-value, chi-square statistic, and degrees of freedom.
+
+- Null Hypothesis (H0): The distribution of parks across neighborhoods is independent of the average income. 
+- Alternate Hypothesis (H1): The distribution of parks across neighborhoods is not independent of the average income. 
+
+~~~ Chi square values ~~~
+Income Chi ---- Statistic : 12.944515438794614 , pvalue : 0.16513299448859434 , Deg.Free. : 9
+
+Chi square interpretation:
+    I would still accept the null hypothesis although pvalue is getting close to 0.05 when compared to the Population chi squared pvalue. There is a much higher chance of the income affecting the number of parks rather than population. The x2 statistic here was 12.94, which is much higher than the population x2. 
+Calculate the correlation between the number of parks and the population density of each neighborhood. Interpret the correlation coefficient.
+
+-Pearson's R:-0.0304
+-pvalue: 0.7638814470642207
+-Pearson's R^2: 0.000925
+
+Interpretations: 
+    A Pearson's R of -0.0304 indicates an ever-so-slight negative correlation betweent eh population density and number of parks: i.e. Many more people, slightly less parks. 
+    The pvalue is really high, meaning there is not much confidence to be had in this correlation. 
+    And the R^2 is REALLY LOW, meaning, there really is not much indication that the population denisty is affecting the number of parks.
+Calculate the correlation between the number of parks and the average income of each neighborhood. Interpret the correlation coefficient.
+
+-Pearson's R:0.14457
+-pvalue: 0.15126
+-Pearson's R^2: 0.0209
+
+Interpretations: 
+    A Pearson's R of 0.14457 indicates a slight positive correlation between the income and number of parks: i.e. Higher income, slightly more parks. 
+    The pvalue is dropping, meaning there is more confidence to be had in this correlation. 
+    And the R^2 is low, meaning, there is a small indication of income affecting the number of parks.
+Based on your findings, provide recommendations to the city council about their plan to increase the number of public parks.
+
+There is NOT enough evidence to disprove the distribution of parks in San Fransico is Independent of both Population Density (Strong Independence) and Income (Borderline). However, these results could become diffrent if the location of parks is not carefully chosen. Therefore, I would strongly incourage the city council to build more parks in the lower income neighborhoods of San Fransico to ensure the equal access to parks regardless of Income.
+'''
 

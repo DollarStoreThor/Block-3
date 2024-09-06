@@ -204,8 +204,191 @@ Finally, interpret the result.
 
 Block 18: Advanced Statistics
 
+
+Scenario 
+
+The city council of San Francisco is planning to increase the number of public parks in the city. They have been gathering data on the number of parks in different neighborhoods, along with data on the population density and average income of each neighborhood. The city council wants to understand whether the number of parks in each neighborhood is distributed randomly, or if it depends on the population density or average income of the neighborhood. 
+
+Dataset
+
+The dataset is provided with information about each neighborhood in San Francisco. The dataset includes the following fields: 
+
+- neighborhood: The name of the neighborhood 
+
+- num_parks: The number of public parks in the neighborhood 
+
+- pop_density: The population density of the neighborhood (people per square mile) 
+
+- avg_income: The average income of residents in the neighborhood 
+
+ 
+
+Objective and Directions
+
+Your task is to analyze this dataset and answer the following questions: 
+
+Is the distribution of parks across neighborhoods independent of population density? Use a chi-square test of independence to answer this question. Report the p-value, chi-square statistic, and degrees of freedom.
+    - Null Hypothesis (H0): The distribution of parks across neighborhoods is independent of the population density. 
+
+    - Alternate Hypothesis (H1): The distribution of parks across neighborhoods is not independent of the population density. 
+
+Is the distribution of parks across neighborhoods independent of the average income? Use a chi-square test of independence to answer this question. Report the p-value, chi-square statistic, and degrees of freedom.
+    - Null Hypothesis (H0): The distribution of parks across neighborhoods is independent of the average income. 
+
+    - Alternate Hypothesis (H1): The distribution of parks across neighborhoods is not independent of the average income. 
+
+For both the above questions, interpret the p-value and chi-squared statistic in the context of the problem.
+Calculate the correlation between the number of parks and the population density of each neighborhood. Interpret the correlation coefficient.
+Calculate the correlation between the number of parks and the average income of each neighborhood. Interpret the correlation coefficient.
+Based on your findings, provide recommendations to the city council about their plan to increase the number of public parks.
+Hints for Today's Workshop 18
+Use pd.qcut(<column>, q=4) to turn a numeric value into a categorical valueUse pd.crosstab to put your table together (frequency distribution for 2 categorical variables)Use chi2_contingency from scipy.stats to carry out the Chi-Square TestUse pearsonr from scipy.stats to carry out any correlation calculations
+ 
+
+Starter Code
+
+# Transform Data to Quartile Data (Numerical -> Categorical)
+df['pop_density_quartiles'] = pd.qcut(df['pop_density'], q=4)
+df['avg_income_quartiles'] = pd.qcut(df['avg_income'], q=4)
+df['num_parks_quartiles'] = pd.qcut(df['num_parks'], q=4, duplicates='drop')
+
+# Create Frequency Table based on the two variables you are interested in
+# Example
+contingency_table_pop = pd.crosstab(df['num_parks_quartiles'], df['pop_density_quartiles'])
+
+
 Block 19: Data Analysis
+
+Text Processing for a Document
+Scenario: 
+You are working for a company that deals with many text documents. The company is interested in processing these documents to extract specific information, clean the text, and standardize the format for consistency. To accomplish this, you have been given a Python script that uses the re (regular expressions) module to perform various text processing tasks on a sample text document. 
+
+
+Problem statement:
+You have to process the given sample text document, perform specific tasks using regular expressions, and write the modified text into a new file. 
+
+Dataset:Sample.txtLinks to an external site.
+Tasks to be performed:
+
+Search for the pattern ‘is' in the string and display the index of the matched object: ‘This is a sample string.’
+Find all occurrences of the word ‘sentence' in the string: ‘This is a sentence. This is also a sentence. Is this a sentence too?’.
+Extract all words from the list of email addresses given below. Also, extract the domain names from these email addresses.
+martin@gmail.com 
+
+thomas@stanford.edu 
+
+rose_11@fashion.now.inc 
+
+Extract all the phone numbers from the given string:
+‘Emma changed her phone number from 0821-1234567 to 0800-1234567. Adam is still using 1234-1234567 as his number.’
+Replace variations of ‘Amrica' with 'America' in the ‘sample.txt’ file.
+Remove all instances where the characters ‘~' and ‘^' are followed by numbers from the ‘sample.txt’ file.
+Find all consecutive uppercase words in the ‘sample.txt’ file.
+Use a list comprehension to convert all uppercase words to lowercase from the ‘sample.txt’ file and store the result in the ‘lower_words' list.
+
+
+
+
+Real Estate Data Analysis
+Scenario: 
+You are working for a real estate agency that deals with data on house prices. The agency has collected data on house prices from various cities and wants to perform data analysis and queries on this dataset. To facilitate efficient data management and analysis, you have been provided with Python code that utilizes the SQLite and Pandas libraries.
+
+
+Problem statement:
+Perform data analysis and querying on the HousePrices dataset using SQLite and Pandas. 
+
+Dataset: HousePrices.csvLinks to an external site.
+Tasks to be performed:
+
+Import the pandas and SQLite3 libraries.
+Display the first few rows of the DataFrame to get an overview of the data.
+Create a connection to the database using SQLite3.
+Define the SQL query to retrieve all the data from the 'test' table where the 'city' column is equal to 'Seattle.
+Display the contents of the 'data' DataFrame to present the filtered house prices data for the city 'Seattle'.
+
+
 
 Block 20: Data Wrangling
 
+
+Overview: 
+
+This workshop is a comprehensive introduction to data analysis using the Pandas library in Python. The workshop will use the Titanic dataset, a rich dataset providing details about the passengers on the Titanic.
+
+Working with real-world data is often messy and unstructured. As a data scientist, you will frequently need to load data, clean it, handle missing values, preprocess it, merge it with other datasets, and visualize it to extract meaningful insights. You will gain hands-on experience with these tasks in this workshop, using the Titanic dataset as an example. 
+
+Problem Statement: 
+
+You are a data scientist at a historical society dedicated to studying maritime disasters. The society has recently acquired a dataset about the Titanic passengers, and they want you to analyze this data to gain insights into the tragedy. The data includes various details about the passengers and their survival status. You need to perform data wrangling operations on the dataset provided, including data indexing, manipulation, handling null values, feature scaling, etc.
+
+Directions: 
+
+Load the Dataset: Use read_csv() to load the Titanic dataset from a CSV file into a DataFrame. The DataFrame should now hold the entire dataset. 
+Explore the Dataset: Use methods such as head(), tail(), describe(), and dtypes to examine the data you are working with. 
+Index Manipulation: Use df.iloc[] and df.loc[] to access specific rows in the DataFrame. Set a new index for the DataFrame with df.set_index() and reset it with df.reset_index(). 
+Data Filtering: Save filtered data to a new CSV file using df.to_csv(). 
+Memory Optimization: Check the DataFrame's memory usage with df.memory_usage(). Optimize the memory usage by converting certain columns to a more memory-efficient data type using df.astype(). 
+Handle Missing Data: Use df.isnull().sum() to count null values in the DataFrame. Drop rows with null values using df.dropna(). Fill missing values in the DataFrame using df.fillna(). 
+Data Preprocessing: Normalize data using the Min-Max scaling technique. 
+Groupby Operations: Use the df.groupby() function to group data by a particular column and perform aggregate functions on these groups. 
+Data Visualization: You can use df.plot() to plot other types of charts, such as bar charts.  
+
+
 Block 21: Data Visualization
+
+Scenario:
+You are a manager at ABC Retail Company. The company has stores across different regions, and they have tasked you with building a dashboard to track key metrics across all their stores. The company has provided you with a dataset of transactions for the past year. Your task is to analyze and visualize the data using Python libraries.  
+
+Problem Statement:
+
+Calculate the following metrics and create appropriate visualizations in Jupyter Notebook: 
+
+Distribution of the total revenue across different stores 
+Monthly trends in revenue 
+Top five products by sales volume  
+Comparison of quantity sold per category  
+A pivot table showing total revenue by store and by month  
+Which store has the highest average unit price for its products?  
+What is the revenue distribution for each category of products?  
+Create a scatter plot to show the relation between Quantity and Revenue for different categories.  
+Directions: 
+
+Initialization: 
+- Import the required libraries. 
+
+- Load the dataset into `df`. 
+
+- Calculate `Revenue` by multiplying `Quantity` and `Unit_Price`. 
+
+- Format the `Date` column to `datetime`. 
+
+ Total Revenue by Store: 
+- Using `seaborn`, visualize a bar chart with stores on the x-axis and revenue on the y-axis, titled "Total Revenue per Store". 
+
+ Monthly Revenue Analysis: 
+- Extract the month from `Date` and save the value in a `Month` variable. 
+
+- Calculate the monthly revenue and illustrate the trend using a Seaborn line chart. 
+
+ Top Products Analysis: 
+- Calculate the total quantity sold for each product. 
+
+- Highlight the top five products with a bar chart. 
+
+ Category-wise Quantity Analysis: 
+- Compute the total quantity for each category. 
+
+- Represent the results with a Plotly graph. 
+
+ Revenue Pivot Table: 
+- Produce a pivot table showcasing revenue sums with stores as rows and months as columns. 
+
+ Analysis of Store Unit Prices: 
+- Show the average unit price for products at each store using a Seaborn bar chart. 
+
+ Category Revenue Distribution: 
+- Depict revenue distributions per category through a Seaborn box plot. 
+
+ Quantity-Revenue Relationship: 
+- Demonstrate the correlation between `Quantity` and `Revenue` across categories using a Plotly graph. 
+

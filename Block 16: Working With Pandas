@@ -6,8 +6,33 @@ import numpy as np
 # Load the dataset into a Pandas DataFrame.
 df = pd.DataFrame()
 df = pd.read_csv(filepath_or_buffer='HousePrices.csv')
-
 df.set_index('date', inplace = True)
-
 df.sort_values(by ='price', ascending = False, inplace = True)
 df
+
+
+#Data Exploration and Cleaning
+"""
+Went with the method of setting the 0 price for a house to the average.
+An alternative way would be to throw out the entire row that had wonky data.
+But an even better way for this task would be to set the 0 price houses to the median row value, I do these operations later in the course
+"""
+
+#pulling out a new df of booleans where the data looks like a df of true and false, true values mean the price == 0
+update_vales_df = pd.DataFrame(df['price'] == 0)
+#updating the true values (origianl prices == 0) to be the average price from the original df
+update_vales_df.where(update_vales_df['price'] == False, df['price'].mean(), inplace = True)
+
+#update the values that had a nuber in the original data set to be NA this is to ensure
+#the update function will skip these na values, instead of setting the houses price from the orignal df to false
+update_vales_df.where(update_vales_df['price'] != False, pd.NA, inplace = True)
+
+#update the origianl DF
+df.update(update_vales_df)
+df.sort_values(by ='price', ascending = False, inplace = True)
+
+df = pd.DataFrame(df.astype({'price':'int64', 
+                             'street':'string', 
+                             'city':'string'}))
+df
+print(f"DataFrame shape(num of rows, num of cols): {df.shape}\nDataFrame size(num of elements): {df.size}\n \nColumn NaN's:\n----------------\n{np.sum(df.isna())}, \n\n{df.dtypes}")

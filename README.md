@@ -49,6 +49,242 @@ Prepare a comprehensive report with your analysis, insights, and visualizations 
 
 Block 15: Linear Algebra
 
+2100
+
+5
+
+3
+
+550
+
+280000
+
+1400
+
+3
+
+2
+
+350
+
+190000
+
+1600
+
+4
+
+2
+
+450
+
+220000
+
+1300
+
+3
+
+1
+
+320
+
+185000
+
+2000
+
+4
+
+3
+
+480
+
+270000
+
+1750
+
+3
+
+2
+
+420
+
+240000
+
+2400
+
+5
+
+4
+
+600
+
+320000
+
+1100
+
+2
+
+1
+
+280
+
+160000
+
+1850
+
+4
+
+3
+
+530
+
+290000
+
+2500
+
+5
+
+4
+
+620
+
+340000
+
+1950
+
+4
+
+2
+
+490
+
+280000
+
+1450
+
+3
+
+2
+
+380
+
+210000
+
+1350
+
+2
+
+1
+
+310
+
+175000
+
+2200
+
+4
+
+3
+
+530
+
+310000
+
+2050
+
+4
+
+3
+
+520
+
+290000
+
+1650
+
+3
+
+2
+
+410
+
+225000
+
+2300
+
+5
+
+4
+
+590
+
+330000
+
+ 
+
+Objective
+
+A linear regression model is being used to represent the relationship between the features (House area, Bedrooms, Bathrooms, and Garage size) and the target variable (Price in $) with the linear equation given below.
+
+image.png
+
+Where a, b, c, and d are the coefficients of the linear equation.
+
+In a linear regression model, the coefficients can be calculated using the formula, image.png
+
+X = Matrix with independent variables (House area, Bedrooms, Bathrooms, and Garage size)
+
+ y = Target variable (Price in $)
+
+Your task is to build the house price prediction model using linear algebra principles in Python.
+
+Directions
+
+1. Split the input dataset into two matrices: X contains all the features of the house, and y contains the target variable (Price).
+
+2. Create a function linear_regression() to calculate the coefficients of the linear equation using the formula: image.png
+
+Use NumPy functions to perform the matrix operations shown in the formula.
+The function should return the “coefficients” value as an output.
+3. Create the function estimate_house_price(coefficients, new_features) that predicts the price of the house.
+
+Calculate the estimate price with the dot product of the coefficients and the new features.
+Create a new_features matrix with the following values:
+House area = 1800 sq ft
+
+Bedrooms = 3
+
+Bathrooms = 2
+
+Garage size = 400 sq ft
+
+Call the function estimate_house_price() to predict the price of the new house.
+
+HINT: In order to split X from the y, use this code 
+X = data[:, :-1]
+
+y = data[:, -1]
+
+data = np.array([[1500,3,2,400,200000],
+                 [1800,4,3,500,250000],
+                 [1200,2,1,300,180000],
+                 [2100,5,3,550,280000],
+                 [1400,3,2,350,190000],
+                 [1600,4,2,450,220000],
+                 [1300,3,1,320,185000],
+                 [2000,4,3,480,270000],
+                 [1750,3,2,420,240000],
+                 [2400,5,4,600,320000],
+                 [1100,2,1,280,160000],
+                 [1850,4,3,530,290000],
+                 [2500,5,4,620,340000],
+                 [1950,4,2,490,280000],
+                 [1450,3,2,380,210000],
+                 [1350,2,1,310,175000],
+                 [2200,4,3,530,310000],
+                 [2050,4,3,520,290000],
+                 [1650,3,2,410,225000],
+                 [2300,5,4,590,330000]])
+
 Block 16: Working With Pandas
 
 Block 17: Statistics Fundamentals
